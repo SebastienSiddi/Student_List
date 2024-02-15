@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  website-pozos:
+    image: php:apache
+    depends_on:
+      - api-pozos
+    ports:
+      - "8080:80"
+    environment:
+      - USERNAME=toto
+      - PASSWORD=python
+    volumes:
+      - ./website:/var/www/html
+    networks:
+      - network_pozos
+
+  api-pozos:
+    image: student-list-api:v1
+    ports:
+      - "4000:5000"
+    volumes:
+      - ./simple_api/student_age.json:/data/student_age.json
+    networks:
+      - network_pozos
+
+networks:
+  network_pozos:
+
